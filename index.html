@@ -122,38 +122,9 @@ body { font-family: var(--sans); background: var(--cream); color: var(--text); o
   width:100%; height:100%; object-fit:cover;
   z-index:0; pointer-events:none;
 }
-#hero-photo-bg {
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  background-image:url('image6.jpeg');
-  background-size:cover; background-position:center;
-  z-index:0; pointer-events:none;
-  display:none;
-}
 #hero-overlay {
   position:absolute; inset:0; z-index:1; pointer-events:none;
   background: linear-gradient(160deg,rgba(48,40,26,.68) 0%,rgba(38,31,20,.62) 60%,rgba(16,13,8,.78) 100%);
-}
-
-/* HERO PREVIEW SWITCH (solo para revisión con la clienta) */
-#hero-mode-switch {
-  position:fixed; bottom:1.25rem; left:50%; transform:translateX(-50%);
-  z-index:300; display:flex; gap:.4rem;
-  background:rgba(255,255,255,.92); border:1px solid var(--gold-light);
-  border-radius:50px; padding:.4rem; backdrop-filter:blur(12px);
-  box-shadow:0 2px 20px rgba(201,169,110,.25);
-}
-.hero-mode-btn {
-  padding:.5rem 1.1rem; border:1px solid transparent; border-radius:50px;
-  background:none; cursor:pointer; font-family:var(--sans);
-  font-size:.68rem; letter-spacing:.06em; color:var(--rose-dark);
-  transition:all .25s;
-}
-.hero-mode-btn:hover { border-color:var(--rose); }
-.hero-mode-btn.active { background:var(--rose); color:#fff; }
-@media(max-width:480px){
-  #hero-mode-switch { bottom:.75rem; }
-  .hero-mode-btn { padding:.45rem .8rem; font-size:.62rem; }
 }
 .sparkle-float {
   position:absolute; z-index:2;
@@ -783,13 +754,6 @@ body.env-open { overflow:hidden; }
 <source src="Taylor Swift - I Knew It, I Knew You (from Toy Story 5).mp3" type="audio/mpeg">
 </audio>
 
-<!-- HERO PREVIEW SWITCH -->
-<div id="hero-mode-switch">
-  <button class="hero-mode-btn active" data-mode="video" onclick="setHeroMode('video')">Video</button>
-  <button class="hero-mode-btn" data-mode="none" onclick="setHeroMode('none')">Sin fondo</button>
-  <button class="hero-mode-btn" data-mode="photo" onclick="setHeroMode('photo')">Foto</button>
-</div>
-
 <!-- NAV DOTS -->
 <nav id="nav-dots">
   <button class="nav-dot active" onclick="goTo('hero')"></button>
@@ -806,7 +770,6 @@ body.env-open { overflow:hidden; }
 <!-- ======================== HERO ======================== -->
 <section id="hero">
   <video id="hero-video" src="video.mp4" autoplay muted loop playsinline webkit-playsinline disablepictureinpicture></video>
-  <div id="hero-photo-bg"></div>
   <div id="hero-overlay"></div>
   <div class="sparkle-float" style="top:12%;left:7%;animation-delay:0s">✝</div>
   <div class="sparkle-float" style="top:20%;right:9%;animation-delay:1.6s">🕊</div>
@@ -1154,26 +1117,6 @@ function cerrarSobre(){
   if(heroVideo){
     heroVideo.muted = true;
     heroVideo.play().catch(()=>{});
-  }
-}
-
-/* ---- HERO PREVIEW SWITCH ---- */
-function setHeroMode(mode){
-  const video = document.getElementById('hero-video');
-  const photo = document.getElementById('hero-photo-bg');
-  document.querySelectorAll('.hero-mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
-  if(mode === 'video'){
-    photo.style.display = 'none';
-    video.style.display = 'block';
-    video.play().catch(()=>{});
-  } else if(mode === 'photo'){
-    video.style.display = 'none';
-    video.pause();
-    photo.style.display = 'block';
-  } else {
-    video.style.display = 'none';
-    video.pause();
-    photo.style.display = 'none';
   }
 }
 
